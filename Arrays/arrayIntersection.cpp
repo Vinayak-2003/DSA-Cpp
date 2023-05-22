@@ -27,14 +27,6 @@ int main(){
                 arr[j]=INT_MIN;
                 break;
             }
-
-            else if(arr[i]<brr[j]){
-                i++;
-            }
-
-            // else{
-            //     j++;
-            // }
         }
     }
     for(auto it=ans.begin();it!=ans.end();it++){
