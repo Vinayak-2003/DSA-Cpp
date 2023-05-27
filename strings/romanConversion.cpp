@@ -1,76 +1,61 @@
+/*
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
+
+I can be placed before V (5) and X (10) to make 4 and 9. 
+X can be placed before L (50) and C (100) to make 40 and 90. 
+C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
+
+Example 1:
+Input: s = "LVIII"
+Output: 58
+Explanation: L = 50, V= 5, III = 3.
+
+Example 2:
+Input: s = "MCMXCIV"
+Output: 1994
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
 int romanToInt(string s) {
-    char c,d;
-    int sum=0;
-    for(int i=0;i<s.length();i++){
-        c = s[i];
-        d = s[i+1];
-        cout<<c<<" "<<d<<endl;
-        // if(c=='I' && d=='V' && c>d){
-        //     sum=sum+4;
-        // }
-        // else if(c=='I' && d=='X' && c>d){
-        //     sum=sum+9;
-        // }
-        // else if(c=='X' && d=='L' && c>d){
-        //     sum=sum+40;
-        // }
-        // else if(c=='X' && d=='C' && c>d){
-        //     sum=sum+90;
-        // }
-        // else if(c=='C' && d=='D' && c>d){
-        //     sum=sum+400;
-        // }
-        // else if(c=='C' && d=='M' && c>d){
-        //     sum=sum+900;
-        // }
-        if(c == 'I'){
-            if(d=='V'){
-                sum=sum+4;
-            }
-            else if(d=='X'){
-                sum=sum+9;
-            }
-            else{
-                sum = sum+1;
-            }
+    map<char , int> roman;
+    roman.insert(make_pair('I' , 1));               //insert or replace the values when the key appears
+    roman.insert(make_pair('V' , 5));
+    roman.insert(make_pair('X' , 10));
+    roman.insert(make_pair('L' , 50));
+    roman.insert(make_pair('C' , 100));
+    roman.insert(make_pair('D' , 500));
+    roman.insert(make_pair('M' , 1000));
+
+    int num , sum=0;
+    int len = s.length();
+    for(int i=0;i<len; ){
+        if(i==(len-1) || roman[s[i]] >= roman[s[i+1]]){
+            cout<<roman[s[i]]<<" "<<s[i]<<endl;
+            num = roman[s[i]];
+            i++;
         }
-        else if(c == 'V'){
-            sum = sum+5;
+        else{
+            cout<<roman[s[i]]<<" "<<s[i]<<endl;
+            num = roman[s[i+1]] - roman[s[i]];
+            i=i+2;
         }
-        else if(c == 'X'){
-            if(d=='L'){
-                sum=sum+40;
-            }
-            else if(d=='C'){
-                sum=sum+90;
-            }
-            else{
-                sum = sum+10;
-            }
-        }
-        else if(c == 'L'){
-            sum = sum+50;
-        }
-        else if(c == 'C'){
-            if(d=='D'){
-                sum=sum+400;
-            }
-            else if(d=='M'){
-                sum=sum+900;
-            }
-            else{
-                sum = sum+100;
-            }
-        }
-        else if(c == 'D'){
-            sum = sum+500;
-        }
-        else if(c == 'M'){
-            sum = sum+1000;
-        }
+        sum = sum + num;
     }
     return sum;
 }
